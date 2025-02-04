@@ -5,10 +5,12 @@ public class Main {
     
     public static void main(String[] args) {
         int[] refString = getRefString();
+        int numPhysicalFrames = getN();
+        int[] currentPages = new int[numPhysicalFrames];
 
-        for(int item : refString){
-            System.out.println(item);
-        }
+        int hits = 0;
+        int misses = 0;
+
     }
 
     public static int[] getRefString(){
@@ -24,4 +26,15 @@ public class Main {
         }
         return intUserRefString;
     }
+
+    public static int getN(){
+        System.out.println("Enter the number of physical frames.");
+        try{
+            return Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException nfe){
+            System.out.println("Invalid date type.");
+        }
+        return -1;
+    }
+
 }
