@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -6,11 +7,35 @@ public class Main {
     public static void main(String[] args) {
         int[] refString = getRefString();
         int numPhysicalFrames = getN();
-        int[] currentPages = new int[numPhysicalFrames];
+        ArrayList<Integer> currentPages = new ArrayList<>();
 
         int hits = 0;
         int misses = 0;
 
+        for(int i = 0; i < refString.length; i++){
+            if(currentPages.size() < numPhysicalFrames
+            && !currentPages.contains(refString[i])){
+                currentPages.add(refString[i]);
+                misses++;
+                System.out.print("add block ");
+                printArrListContents(currentPages);
+                System.out.println();
+            } else if(currentPages.size() == numPhysicalFrames
+            && !currentPages.contains(refString[i])){
+                // runOPTAlgo();
+                misses++;
+                System.out.print("algo block ");
+                printArrListContents(currentPages);
+                System.out.println();
+            } else {
+                hits++;
+                System.out.print("hits block ");
+                System.out.println();
+            }
+        }
+        System.out.println("final current pages");
+        printArrListContents(currentPages);
+        System.out.println("final misses / hits" + misses + "/" + hits);
     }
 
     public static int[] getRefString(){
@@ -37,4 +62,15 @@ public class Main {
         return -1;
     }
 
+    public static void printArrListContents(ArrayList<Integer> arrlist){
+        for(Integer item : arrlist){
+            System.out.print(item + " ");
+        }
+    }
+
+    public static void printArrayContents(int[] arr){
+        for(Integer item : arr){
+            System.out.print(item + " ");
+        }
+    }
 }

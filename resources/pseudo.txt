@@ -16,10 +16,12 @@ Implementing the OPT algo
         misses++
         print the DS
     else if the DS is full && the number is not already in the DS
+        [
         we want to look ahead in the ref string and see which appear first
         + in my mind I am "checking off" numbers as I go and if my list of
         + "checked off" numbers is size of the DS -1 then I know that the
         + number which is not contained on the "checked off" list should be evicted
+        ]
 
         maybe create a separate method which returns the number which is in the
         + DS but NOT in the "checked off" list
