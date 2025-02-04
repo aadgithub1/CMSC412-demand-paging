@@ -3,11 +3,13 @@ import java.util.Scanner;
 
 public class Main {
     public static Scanner scanner = new Scanner(System.in);
-    
+    public static ArrayList<Integer> currentPages = new ArrayList<>();
+    public static int[] refString = getRefString();
+    public static int numPhysicalFrames = getN();
+
     public static void main(String[] args) {
-        int[] refString = getRefString();
-        int numPhysicalFrames = getN();
-        ArrayList<Integer> currentPages = new ArrayList<>();
+        
+        
 
         int hits = 0;
         int misses = 0;
@@ -22,7 +24,7 @@ public class Main {
                 System.out.println();
             } else if(currentPages.size() == numPhysicalFrames
             && !currentPages.contains(refString[i])){
-                // runOPTAlgo();
+                runOPTAlgo(i);
                 misses++;
                 System.out.print("algo block ");
                 printArrListContents(currentPages);
@@ -71,6 +73,27 @@ public class Main {
     public static void printArrayContents(int[] arr){
         for(Integer item : arr){
             System.out.print(item + " ");
+        }
+    }
+
+    public static void runOPTAlgo(int index){
+        ArrayList<Integer> evictList = new ArrayList<>(currentPages);
+        int victimFrame = -1;
+        for(int i = index; i < refString.length; i++){
+            if(evictList.size() == 1){
+                victimFrame = evictList.get(0);
+                break;
+            }
+            if(evictList.contains(refString[i])){
+                evictList.remove(evictList.indexOf(refString[i]));
+            }
+
+        }
+
+        if(victimFrame != -1){
+            System.out.println("Should evict " + victimFrame);
+        } else {
+            System.out.println("Dealer's choice");
         }
     }
 }

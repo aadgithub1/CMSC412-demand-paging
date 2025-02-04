@@ -17,10 +17,17 @@ Implementing the OPT algo
         print the DS
     else if the DS is full && the number is not already in the DS
         [
-        we want to look ahead in the ref string and see which appear first
+        we want to look ahead in the ref string and see which #s appear first
         + in my mind I am "checking off" numbers as I go and if my list of
         + "checked off" numbers is size of the DS -1 then I know that the
         + number which is not contained on the "checked off" list should be evicted
+
+        with arrlist i can copy the current state (access nums) and then remove
+        them until there is one left - this will be the victim frame
+
+        once i find the victim frame
+
+        i also need the index from which to start "looking forward" to check off
         ]
 
         maybe create a separate method which returns the number which is in the
