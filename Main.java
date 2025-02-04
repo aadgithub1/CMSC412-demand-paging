@@ -37,7 +37,7 @@ public class Main {
         }
         System.out.println("final current pages");
         printArrListContents(currentPages);
-        System.out.println("final misses / hits" + misses + "/" + hits);
+        System.out.println("final hits / misses: " + hits + " / " + misses);
     }
 
     public static int[] getRefString(){
@@ -68,6 +68,7 @@ public class Main {
         for(Integer item : arrlist){
             System.out.print(item + " ");
         }
+        System.out.println();
     }
 
     public static void printArrayContents(int[] arr){
@@ -92,8 +93,14 @@ public class Main {
 
         if(victimFrame != -1){
             System.out.println("Should evict " + victimFrame);
+            currentPages.remove(currentPages.indexOf(victimFrame));
+            currentPages.add(refString[index]);
         } else {
-            System.out.println("Dealer's choice");
+            System.out.println("Dealer's choice, options are");
+            printArrListContents(evictList);
+            System.out.println("we'll evict " + evictList.get(0));
+            currentPages.remove(currentPages.indexOf(evictList.get(0)));
+            currentPages.add(refString[index]);
         }
     }
 }

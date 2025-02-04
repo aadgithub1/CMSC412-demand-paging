@@ -25,7 +25,13 @@ Implementing the OPT algo
         with arrlist i can copy the current state (access nums) and then remove
         them until there is one left - this will be the victim frame
 
-        once i find the victim frame
+        + once i find the victim frame i want to remove that number from the
+        + currentPages arrlist and i want to add the number from refString we are
+        + currently looking at, which should be at refString[index] because we 
+        + passed it in
+
+        currentPages.remove(currentPages.indexOf(victimFrame))
+        currentPages.add(refString[index])
 
         i also need the index from which to start "looking forward" to check off
         ]
