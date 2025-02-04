@@ -1,0 +1,56 @@
+Reference string with ten pages numbered 0-9:
+7012030423
+
+Implementing the OPT algo
+    We receive an access num (from ref string)
+    We need to store this ref string in an array/arrlist
+    We need to create a DS the size of N which is specified by the user
+    + this will be the number of physical frames we have
+
+    int hits
+    int misses
+
+    for each item (num) in the reference string array:
+    if there is room in the DS && number is not in DS
+        add the access (num) to the DS
+        misses++
+        print the DS
+    else if the DS is full && the number is not already in the DS
+        we want to look ahead in the ref string and see which appear first
+        + in my mind I am "checking off" numbers as I go and if my list of
+        + "checked off" numbers is size of the DS -1 then I know that the
+        + number which is not contained on the "checked off" list should be evicted
+
+        maybe create a separate method which returns the number which is in the
+        + DS but NOT in the "checked off" list
+
+        evict the designated number
+        add the new requested access number to the DS
+        misses++
+        print the DS
+    else
+        hits++
+
+
+
+
+
+Displaying the info
+
+
+
+
+
+
+
+Implementing the NEW algo
+
+
+
+
+
+
+
+
+
+Displaying the info (could be different)
