@@ -6,6 +6,7 @@ public class Main {
     public static ArrayList<Integer> currentPages = new ArrayList<>();
     public static int[] refString = getRefString();
     public static int numPhysicalFrames = getN();
+    public static boolean isNEWAlgo = getIsNew();
 
     public static void main(String[] args) {
         
@@ -22,8 +23,11 @@ public class Main {
                 System.out.println();
             } else if(currentPages.size() == numPhysicalFrames
             && !currentPages.contains(refString[i])){
-                // runOPTAlgo(i);
-                runNEWAlgo(i);
+                if(isNEWAlgo) {
+                    runNEWAlgo(i);
+                } else{
+                    runOPTAlgo(i);
+                }
                 misses++;
                 System.out.print("algo block ");
                 printArrListContents(currentPages);
@@ -61,6 +65,18 @@ public class Main {
             System.out.println("Invalid date type.");
         }
         return -1;
+    }
+
+    public static boolean getIsNew(){
+        System.out.println("Type 'n' to run the NEW algorithm, hit any other "
+        + "key to run the OPT algorithm.");
+        String newChoice = scanner.nextLine().toLowerCase();
+        System.out.println(newChoice.equals("n"));
+        if(newChoice.equals("n")){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static void printArrListContents(ArrayList<Integer> arrlist){
