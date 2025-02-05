@@ -59,6 +59,12 @@ Displaying the info
 
 
 Implementing the NEW algo
+    when i am Implementing LRU mentally i am reversing opt.
+    + that is, i am looking BACKWARD at the reference list starting at a given
+    + index and i "check off" (remove with the capabilities of an arrlist) #s
+    
+    so, i believe i can do the same copy and remove process in the other
+    + direction (decrement) and set victimFrame when 
 
 
 

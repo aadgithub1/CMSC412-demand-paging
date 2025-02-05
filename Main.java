@@ -9,8 +9,6 @@ public class Main {
 
     public static void main(String[] args) {
         
-        
-
         int hits = 0;
         int misses = 0;
 
@@ -24,7 +22,8 @@ public class Main {
                 System.out.println();
             } else if(currentPages.size() == numPhysicalFrames
             && !currentPages.contains(refString[i])){
-                runOPTAlgo(i);
+                // runOPTAlgo(i);
+                runNEWAlgo(i);
                 misses++;
                 System.out.print("algo block ");
                 printArrListContents(currentPages);
@@ -99,6 +98,31 @@ public class Main {
             System.out.println("Dealer's choice, options are");
             printArrListContents(evictList);
             System.out.println("we'll evict " + evictList.get(0));
+            currentPages.remove(currentPages.indexOf(evictList.get(0)));
+            currentPages.add(refString[index]);
+        }
+    }
+
+    public static void runNEWAlgo(int index){
+        ArrayList<Integer> evictList = new ArrayList<>(currentPages);
+        int victimFrame = -1;
+        for(int i = index; i >= 0; i--){
+            if(evictList.contains(refString[i])
+            && evictList.size() == 2){
+                victimFrame = refString[i];
+                break;
+            } else if(evictList.contains(refString[i])){
+                evictList.remove(evictList.indexOf(refString[i]));
+            }
+        }
+
+        if(victimFrame != -1){
+            System.out.println("Victim frame is " + victimFrame);
+            currentPages.remove(currentPages.indexOf(victimFrame));
+            currentPages.add(refString[index]);
+        } else{
+            System.out.println("doesn't really matter, let's evict "
+            + evictList.get(0));
             currentPages.remove(currentPages.indexOf(evictList.get(0)));
             currentPages.add(refString[index]);
         }
