@@ -43,6 +43,7 @@ public class Main {
                 System.out.print("hits block ");
                 System.out.println();
             }
+            displayInfo();
         }
         System.out.println("final current pages");
         printArrListContents(currentPages);
@@ -114,14 +115,16 @@ public class Main {
 
         if(victimFrame != -1){
             System.out.println("Should evict " + victimFrame);
-            currentPages.remove(currentPages.indexOf(victimFrame));
-            currentPages.add(refString[index]);
+            int removalIndex = currentPages.indexOf(victimFrame);
+            currentPages.remove(removalIndex);
+            currentPages.add(removalIndex, refString[index]);
         } else {
             System.out.println("Dealer's choice, options are");
             printArrListContents(evictList);
             System.out.println("we'll evict " + evictList.get(0));
-            currentPages.remove(currentPages.indexOf(evictList.get(0)));
-            currentPages.add(refString[index]);
+            int removalIndex = currentPages.indexOf(evictList.get(0));
+            currentPages.remove(removalIndex);
+            currentPages.add(removalIndex, refString[index]);
         }
     }
 
@@ -140,13 +143,19 @@ public class Main {
 
         if(victimFrame != -1){
             System.out.println("Victim frame is " + victimFrame);
-            currentPages.remove(currentPages.indexOf(victimFrame));
-            currentPages.add(refString[index]);
+            int removalIndex = currentPages.indexOf(victimFrame);
+            currentPages.remove(removalIndex);
+            currentPages.add(removalIndex, refString[index]);
         } else{
             System.out.println("doesn't really matter, let's evict "
             + evictList.get(0));
-            currentPages.remove(currentPages.indexOf(evictList.get(0)));
-            currentPages.add(refString[index]);
+            int removalIndex = currentPages.indexOf(evictList.get(0));
+            currentPages.remove(removalIndex);
+            currentPages.add(removalIndex, refString[index]);
         }
+    }
+
+    public static void displayInfo(){
+
     }
 }
