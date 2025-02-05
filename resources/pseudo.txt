@@ -75,3 +75,6 @@ Implementing the NEW algo
 
 
 Displaying the info (could be different)
+
+Making the loop run only if the user hits enter
+    

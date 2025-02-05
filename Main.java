@@ -14,6 +14,12 @@ public class Main {
         int misses = 0;
 
         for(int i = 0; i < refString.length; i++){
+            System.out.println("Press enter to continue, any other key + enter "
+            + "to quit.");
+            if(!scanner.nextLine().equals("")){
+                break;
+            }
+
             if(currentPages.size() < numPhysicalFrames
             && !currentPages.contains(refString[i])){
                 currentPages.add(refString[i]);
@@ -41,6 +47,7 @@ public class Main {
         System.out.println("final current pages");
         printArrListContents(currentPages);
         System.out.println("final hits / misses: " + hits + " / " + misses);
+        scanner.close();
     }
 
     public static int[] getRefString(){
@@ -71,7 +78,6 @@ public class Main {
         System.out.println("Type 'n' to run the NEW algorithm, hit any other "
         + "key to run the OPT algorithm.");
         String newChoice = scanner.nextLine().toLowerCase();
-        System.out.println(newChoice.equals("n"));
         if(newChoice.equals("n")){
             return true;
         } else {
