@@ -30,10 +30,10 @@ public class Main {
                 ArrayList<String> arrList = new ArrayList<>();
                 if(i != 0){
                     for(int j = 0; j < i; j++){
-                        arrList.add(" ");
+                        arrList.add(" "); //pad other phys frame arrlists
                     }
                 }
-                arrList.add(Integer.toString(refString[i]));
+                arrList.add(Integer.toString(refString[i])); //add the access #
                 arrListOfArrLists.add(arrList);
                 victimFrames.add(" ");
                 pageFaults.add("F");
@@ -95,19 +95,6 @@ public class Main {
         }
     }
 
-    public static void printArrListContents(ArrayList<Integer> arrlist){
-        for(Integer item : arrlist){
-            System.out.print(item + " ");
-        }
-        System.out.println();
-    }
-
-    public static void printArrayContents(int[] arr){
-        for(Integer item : arr){
-            System.out.print(item + " ");
-        }
-    }
-
     public static void runOPTAlgo(int index){
         ArrayList<Integer> evictList = new ArrayList<>(currentPages);
         int victimFrame = -1;
@@ -122,18 +109,18 @@ public class Main {
         }
 
         if(victimFrame != -1){
+            processPageFault(victimFrame, index);
+        } else {
+            processPageFault(evictList.get(0), index);
+        }
+    }
+
+    public static void processPageFault(int victimFrame, int index){
             victimFrames.add(Integer.toString(victimFrame));
             int removalIndex = currentPages.indexOf(victimFrame);
             currentPages.remove(removalIndex);
             currentPages.add(removalIndex, refString[index]);
             arrListOfArrLists.get(removalIndex).add(Integer.toString(refString[index]));
-        } else {
-            victimFrames.add(Integer.toString(evictList.get(0)));
-            int removalIndex = currentPages.indexOf(evictList.get(0));
-            currentPages.remove(removalIndex);
-            currentPages.add(removalIndex, refString[index]);
-            arrListOfArrLists.get(removalIndex).add(Integer.toString(refString[index]));
-        }
     }
 
     public static void runNEWAlgo(int index){
@@ -150,17 +137,9 @@ public class Main {
         }
 
         if(victimFrame != -1){
-            victimFrames.add(Integer.toString(victimFrame));
-            int removalIndex = currentPages.indexOf(victimFrame);
-            currentPages.remove(removalIndex);
-            currentPages.add(removalIndex, refString[index]);
-            arrListOfArrLists.get(removalIndex).add(Integer.toString(refString[index]));
+            processPageFault(victimFrame, index);
         } else{
-            victimFrames.add(Integer.toString(evictList.get(0)));
-            int removalIndex = currentPages.indexOf(evictList.get(0));
-            currentPages.remove(removalIndex);
-            currentPages.add(removalIndex, refString[index]);
-            arrListOfArrLists.get(removalIndex).add(Integer.toString(refString[index]));
+            processPageFault(evictList.get(0), index);
         }
     }
 
@@ -201,6 +180,12 @@ public class Main {
     }
 
     public static void normalizeArrayLists(int currentIndex){
+        //Including padding (" ") all arrayLists which represent
+        //physical frames should have i + 1 items at all times in the
+        //context of the main loop, which iterates over the reference string.
+        //If that is not the case, copy the number at the end of the arraylist
+        //and add it again to give the effect of the table columns growing.
+
         for(int i = 0; i < arrListOfArrLists.size(); i++){
             if(arrListOfArrLists.get(i).size() < currentIndex+1){
                 ArrayList<String> subArrList = arrListOfArrLists.get(i);
