@@ -28,7 +28,6 @@ public class Main {
                 ArrayList<Integer> newArrList = new ArrayList<>();
                 newArrList.add(refString[i]);
                 arrListOfArrLists.add(newArrList);
-                System.out.println("ArrOfArrSize" + arrListOfArrLists.size());
                 misses++;
                 // System.out.print("add block ");
                 // printArrListContents(currentPages);
@@ -118,7 +117,6 @@ public class Main {
             if(evictList.contains(refString[i])){
                 evictList.remove(evictList.indexOf(refString[i]));
             }
-
         }
 
         if(victimFrame != -1){
@@ -182,7 +180,7 @@ public class Main {
     }
 
     public static void printTableFormatRefString(){
-        System.out.print("Reference String  | ");
+        System.out.print("Reference String | ");
         for(int number : refString){
             System.out.print(number + " | ");
         }
@@ -190,7 +188,7 @@ public class Main {
     }
 
     public static void printTableArrList(int frameNumber){
-        System.out.print("Physical frame: " + frameNumber + " | ");
+        System.out.print("Physical frame " + frameNumber + " | ");
         for(Integer page : arrListOfArrLists.get(frameNumber)){
             System.out.print(page + " | ");
         }
