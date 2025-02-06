@@ -24,9 +24,9 @@ public class Main {
             && !currentPages.contains(refString[i])){
                 currentPages.add(refString[i]);
                 misses++;
-                System.out.print("add block ");
-                printArrListContents(currentPages);
-                System.out.println();
+                // System.out.print("add block ");
+                // printArrListContents(currentPages);
+                // System.out.println();
             } else if(currentPages.size() == numPhysicalFrames
             && !currentPages.contains(refString[i])){
                 if(isNEWAlgo) {
@@ -35,19 +35,19 @@ public class Main {
                     runOPTAlgo(i);
                 }
                 misses++;
-                System.out.print("algo block ");
-                printArrListContents(currentPages);
-                System.out.println();
+                // System.out.print("algo block ");
+                // printArrListContents(currentPages);
+                // System.out.println();
             } else {
                 hits++;
-                System.out.print("hits block ");
-                System.out.println();
+                // System.out.print("hits block ");
+                // System.out.println();
             }
             displayInfo();
         }
-        System.out.println("final current pages");
-        printArrListContents(currentPages);
-        System.out.println("final hits / misses: " + hits + " / " + misses);
+        // System.out.println("final current pages");
+        // printArrListContents(currentPages);
+        // System.out.println("final hits / misses: " + hits + " / " + misses);
         scanner.close();
     }
 
@@ -156,6 +156,21 @@ public class Main {
     }
 
     public static void displayInfo(){
+        printDashedLine();
+        printTableFormatRefString();
+        printDashedLine();
+    }
 
+    public static void printDashedLine(){
+        System.out.println("-----------------------------------------------"
+        + "-------------------");
+    }
+
+    public static void printTableFormatRefString(){
+        System.out.print("Reference String | ");
+        for(int number : refString){
+            System.out.print(number + " | ");
+        }
+        System.out.println();
     }
 }
