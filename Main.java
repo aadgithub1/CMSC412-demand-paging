@@ -27,7 +27,6 @@ public class Main {
             if(currentPages.size() < numPhysicalFrames
             && !currentPages.contains(refString[i])){
                 currentPages.add(refString[i]);
-                //back to creating lists here
                 ArrayList<String> arrList = new ArrayList<>();
                 if(i != 0){
                     for(int j = 0; j < i; j++){
@@ -40,9 +39,6 @@ public class Main {
                 pageFaults.add("F");
 
                 misses++;
-                // System.out.print("add block ");
-                // printArrListContents(currentPages);
-                // System.out.println();
             } else if(currentPages.size() == numPhysicalFrames
             && !currentPages.contains(refString[i])){
                 if(isNEWAlgo) {
@@ -52,22 +48,15 @@ public class Main {
                 }
                 misses++;
                 pageFaults.add("F");
-                // System.out.print("algo block ");
-                // printArrListContents(currentPages);
-                // System.out.println();
+
             } else {
                 hits++;
                 victimFrames.add(" ");
                 pageFaults.add(" ");
-                // System.out.print("hits block ");
-                // System.out.println();
             }
             normalizeArrayLists(i);
             displayInfo();
         }
-        System.out.println("final current pages");
-        printArrListContents(currentPages);
-        // System.out.println("final hits / misses: " + hits + " / " + misses);
         scanner.close();
     }
 
@@ -133,16 +122,12 @@ public class Main {
         }
 
         if(victimFrame != -1){
-            System.out.println("Should evict " + victimFrame);
             victimFrames.add(Integer.toString(victimFrame));
             int removalIndex = currentPages.indexOf(victimFrame);
             currentPages.remove(removalIndex);
             currentPages.add(removalIndex, refString[index]);
             arrListOfArrLists.get(removalIndex).add(Integer.toString(refString[index]));
         } else {
-            System.out.println("Dealer's choice, options are");
-            printArrListContents(evictList);
-            System.out.println("we'll evict " + evictList.get(0));
             victimFrames.add(Integer.toString(evictList.get(0)));
             int removalIndex = currentPages.indexOf(evictList.get(0));
             currentPages.remove(removalIndex);
@@ -165,15 +150,12 @@ public class Main {
         }
 
         if(victimFrame != -1){
-            System.out.println("Victim frame is " + victimFrame);
             victimFrames.add(Integer.toString(victimFrame));
             int removalIndex = currentPages.indexOf(victimFrame);
             currentPages.remove(removalIndex);
             currentPages.add(removalIndex, refString[index]);
             arrListOfArrLists.get(removalIndex).add(Integer.toString(refString[index]));
         } else{
-            System.out.println("doesn't really matter, let's evict "
-            + evictList.get(0));
             victimFrames.add(Integer.toString(evictList.get(0)));
             int removalIndex = currentPages.indexOf(evictList.get(0));
             currentPages.remove(removalIndex);
