@@ -5,6 +5,8 @@ public class Main {
     public static Scanner scanner = new Scanner(System.in);
     public static ArrayList<Integer> currentPages = new ArrayList<>();
     public static ArrayList<ArrayList<String>> arrListOfArrLists = new ArrayList<>();
+    public static ArrayList<String> pageFaults = new ArrayList<>();
+    public static ArrayList<String> victimFrames = new ArrayList<>();
     public static int[] refString = getRefString();
     public static int numPhysicalFrames = getN();
     public static boolean isNEWAlgo = getIsNew();
@@ -34,6 +36,8 @@ public class Main {
                 }
                 arrList.add(Integer.toString(refString[i]));
                 arrListOfArrLists.add(arrList);
+                victimFrames.add(" ");
+                pageFaults.add("F");
 
                 misses++;
                 // System.out.print("add block ");
@@ -47,11 +51,14 @@ public class Main {
                     runOPTAlgo(i);
                 }
                 misses++;
+                pageFaults.add("F");
                 // System.out.print("algo block ");
                 // printArrListContents(currentPages);
                 // System.out.println();
             } else {
                 hits++;
+                victimFrames.add(" ");
+                pageFaults.add(" ");
                 // System.out.print("hits block ");
                 // System.out.println();
             }
@@ -127,6 +134,7 @@ public class Main {
 
         if(victimFrame != -1){
             System.out.println("Should evict " + victimFrame);
+            victimFrames.add(Integer.toString(victimFrame));
             int removalIndex = currentPages.indexOf(victimFrame);
             currentPages.remove(removalIndex);
             currentPages.add(removalIndex, refString[index]);
@@ -135,6 +143,7 @@ public class Main {
             System.out.println("Dealer's choice, options are");
             printArrListContents(evictList);
             System.out.println("we'll evict " + evictList.get(0));
+            victimFrames.add(Integer.toString(evictList.get(0)));
             int removalIndex = currentPages.indexOf(evictList.get(0));
             currentPages.remove(removalIndex);
             currentPages.add(removalIndex, refString[index]);
@@ -157,6 +166,7 @@ public class Main {
 
         if(victimFrame != -1){
             System.out.println("Victim frame is " + victimFrame);
+            victimFrames.add(Integer.toString(victimFrame));
             int removalIndex = currentPages.indexOf(victimFrame);
             currentPages.remove(removalIndex);
             currentPages.add(removalIndex, refString[index]);
@@ -164,6 +174,7 @@ public class Main {
         } else{
             System.out.println("doesn't really matter, let's evict "
             + evictList.get(0));
+            victimFrames.add(Integer.toString(evictList.get(0)));
             int removalIndex = currentPages.indexOf(evictList.get(0));
             currentPages.remove(removalIndex);
             currentPages.add(removalIndex, refString[index]);
@@ -178,15 +189,21 @@ public class Main {
         for(int i = 0; i < arrListOfArrLists.size(); i++){
             printTableArrList(i);
         }
+        printDashedLine();
+        printPageFaults();
+        printVictimFrames();
+        printDashedLine();
     }
 
     public static void printDashedLine(){
-        System.out.println("-----------------------------------------------"
-        + "-------------------");
+        for(int i = 0; i < (18 + ((refString.length) * 4)); i++){
+            System.out.print("-");
+        }
+        System.out.println();
     }
 
     public static void printTableFormatRefString(){
-        System.out.print("Reference String | ");
+        System.out.print("|Reference String | ");
         for(int number : refString){
             System.out.print(number + " | ");
         }
@@ -194,7 +211,7 @@ public class Main {
     }
 
     public static void printTableArrList(int frameNumber){
-        System.out.print("Physical frame " + frameNumber + " | ");
+        System.out.print("|Physical frame " + frameNumber + " | ");
         for(String page : arrListOfArrLists.get(frameNumber)){
             System.out.print(page + " | ");
         }
@@ -209,5 +226,21 @@ public class Main {
                 subArrList.add(lastElement);
             }
         }
+    }
+
+    public static void printPageFaults(){
+        System.out.print("|    Page Faults  | ");
+        for(String faultIndicator : pageFaults){
+            System.out.print(faultIndicator + " | ");
+        }
+        System.out.println();
+    }
+    
+    public static void printVictimFrames(){
+        System.out.print("|   Victim Frame  | ");
+        for(String frame : victimFrames){
+            System.out.print(frame + " | ");
+        }
+        System.out.println();
     }
 }
