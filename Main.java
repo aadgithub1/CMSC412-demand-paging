@@ -4,9 +4,11 @@ import java.util.Scanner;
 public class Main {
     public static Scanner scanner = new Scanner(System.in);
     public static ArrayList<Integer> currentPages = new ArrayList<>();
+    public static ArrayList<ArrayList<Integer>> arrListOfArrLists = new ArrayList<>();
     public static int[] refString = getRefString();
     public static int numPhysicalFrames = getN();
     public static boolean isNEWAlgo = getIsNew();
+    public static int longestList = 0;
 
     public static void main(String[] args) {
         
@@ -23,6 +25,10 @@ public class Main {
             if(currentPages.size() < numPhysicalFrames
             && !currentPages.contains(refString[i])){
                 currentPages.add(refString[i]);
+                ArrayList<Integer> newArrList = new ArrayList<>();
+                newArrList.add(refString[i]);
+                arrListOfArrLists.add(newArrList);
+                System.out.println("ArrOfArrSize" + arrListOfArrLists.size());
                 misses++;
                 // System.out.print("add block ");
                 // printArrListContents(currentPages);
@@ -43,10 +49,12 @@ public class Main {
                 // System.out.print("hits block ");
                 // System.out.println();
             }
+            updateLongestList();
+            normalizeLists();
             displayInfo();
         }
-        // System.out.println("final current pages");
-        // printArrListContents(currentPages);
+        System.out.println("final current pages");
+        printArrListContents(currentPages);
         // System.out.println("final hits / misses: " + hits + " / " + misses);
         scanner.close();
     }
@@ -118,6 +126,7 @@ public class Main {
             int removalIndex = currentPages.indexOf(victimFrame);
             currentPages.remove(removalIndex);
             currentPages.add(removalIndex, refString[index]);
+            arrListOfArrLists.get(removalIndex).add(refString[index]);
         } else {
             System.out.println("Dealer's choice, options are");
             printArrListContents(evictList);
@@ -125,6 +134,7 @@ public class Main {
             int removalIndex = currentPages.indexOf(evictList.get(0));
             currentPages.remove(removalIndex);
             currentPages.add(removalIndex, refString[index]);
+            arrListOfArrLists.get(removalIndex).add(refString[index]);
         }
     }
 
@@ -146,12 +156,14 @@ public class Main {
             int removalIndex = currentPages.indexOf(victimFrame);
             currentPages.remove(removalIndex);
             currentPages.add(removalIndex, refString[index]);
+            arrListOfArrLists.get(removalIndex).add(refString[index]);
         } else{
             System.out.println("doesn't really matter, let's evict "
             + evictList.get(0));
             int removalIndex = currentPages.indexOf(evictList.get(0));
             currentPages.remove(removalIndex);
             currentPages.add(removalIndex, refString[index]);
+            arrListOfArrLists.get(removalIndex).add(refString[index]);
         }
     }
 
@@ -159,6 +171,9 @@ public class Main {
         printDashedLine();
         printTableFormatRefString();
         printDashedLine();
+        for(int i = 0; i < arrListOfArrLists.size(); i++){
+            printTableArrList(i);
+        }
     }
 
     public static void printDashedLine(){
@@ -167,10 +182,33 @@ public class Main {
     }
 
     public static void printTableFormatRefString(){
-        System.out.print("Reference String | ");
+        System.out.print("Reference String  | ");
         for(int number : refString){
             System.out.print(number + " | ");
         }
         System.out.println();
+    }
+
+    public static void printTableArrList(int frameNumber){
+        System.out.print("Physical frame: " + frameNumber + " | ");
+        for(Integer page : arrListOfArrLists.get(frameNumber)){
+            System.out.print(page + " | ");
+        }
+        System.out.println();
+    }
+
+    public static void updateLongestList(){
+        for(ArrayList<Integer> list : arrListOfArrLists){
+            if(list.size() > longestList){
+                longestList = list.size();
+            }
+        }
+    }
+    public static void normalizeLists(){
+        for(ArrayList<Integer> list : arrListOfArrLists){
+            if(list.size() < longestList){
+                list.add(list.get(list.size()-1));
+            }
+        }
     }
 }

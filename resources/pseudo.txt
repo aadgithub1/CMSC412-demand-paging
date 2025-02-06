@@ -79,9 +79,25 @@ Displaying the info (could be different)
         while (for) i < n:
             add another anon arrlist to the parent arrlist
 
-    each iteration, use a number's index in the currentPages
+    each iteration, use a number's index in the currentPages - currentPages.get(i)
     and add it to its corresponding anonoymous arrlist using 
     parrentArrList.get(index).add(number)
+
+    basically at the end of an iteration loop through the currentPages and do
+    arrListOfArrLists.get(i).add(currentPages.get(i));
+
+    then,
+    printDashedLine()
+    printFormattedRefString()
+    printDashedLine()
+    printTableArrList ={
+        public static void printTableArrList(int frameNumber){
+            print("Physical frame " + frameNumber + " | ")
+            for(int thing : arrListOfArrLists.get(frameNumber)){
+                print(thing + " | ")
+            }
+        } 
+    }
 
 
 
