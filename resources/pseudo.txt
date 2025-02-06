@@ -99,6 +99,11 @@ Displaying the info (could be different)
         } 
     }
 
+    if we get to the end of the loop, to display info &&
+
+    how do i tell the program to copy the last element of each
+    arrlist and append it to the arrlist if it has not changed 
+
 
 
 
