@@ -160,17 +160,6 @@ public class Main {
         numPhysicalFrames = numFrames;
     }
 
-    // public static boolean getIsNew(){
-    //     System.out.println("Type 'n' to run the NEW algorithm, hit any other "
-    //     + "key to run the OPT algorithm.");
-    //     String newChoice = scanner.nextLine().toLowerCase();
-    //     if(newChoice.equals("n")){
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
-
     public static void runOPTAlgo(int index){
         ArrayList<Integer> evictList = new ArrayList<>(currentPages);
         int victimFrame = -1;
@@ -256,12 +245,6 @@ public class Main {
     }
 
     public static void normalizeArrayLists(int currentIndex){
-        //Including padding (" ") all arrayLists which represent
-        //physical frames should have i + 1 items at all times in the
-        //context of the main loop, which iterates over the reference string.
-        //If that is not the case, copy the number at the end of the arraylist
-        //and add it again to give the effect of the table columns growing.
-
         for(int i = 0; i < arrListOfArrLists.size(); i++){
             if(arrListOfArrLists.get(i).size() < currentIndex+1){
                 ArrayList<String> subArrList = arrListOfArrLists.get(i);
