@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -75,13 +76,19 @@ public class Main {
     }
 
     public static int getN(){
+        int numFrames = 0;
         System.out.println("Enter the number of physical frames.");
-        try{
-            return Integer.parseInt(scanner.nextLine());
-        } catch (NumberFormatException nfe){
-            System.out.println("Invalid date type.");
+        while(numFrames < 2 || numFrames > 8) {
+            try{
+                numFrames = Integer.parseInt(scanner.nextLine());
+                if(numFrames < 2 || numFrames > 8){
+                    System.out.println("Error: Out of range, enter numbers 2-8.");
+                }
+            } catch(NumberFormatException nfe){
+                System.out.println("Invalid data type; enter numbers 2-8.");
+            }
         }
-        return -1;
+        return numFrames;
     }
 
     public static boolean getIsNew(){
