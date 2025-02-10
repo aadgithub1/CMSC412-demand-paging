@@ -63,6 +63,10 @@ public class Main {
                 normalizeArrayLists(i);
                 displayInfo();
             }
+            currentPages.clear();
+            arrListOfArrLists.clear();
+            pageFaults.clear();
+            victimFrames.clear();
         }
         scanner.close();
     }
@@ -75,10 +79,11 @@ public class Main {
                 exit = true;
                 return;
             } else if(userChoice.equals("1")){
-                getN();
+                setN();
             } else if(userChoice.equals("2")){
-                getRefString();
+                setRefString();
             } else if(userChoice.equals("3")){
+                isNEWAlgo = false;
                 return;
             } else if(userChoice.equals("4")){
                 isNEWAlgo = true;
@@ -101,7 +106,7 @@ public class Main {
         );
     }
 
-    public static void getRefString(){
+    public static void setRefString(){
         System.out.println("Enter the reference string: ");
         while(true){
             try{
@@ -125,7 +130,7 @@ public class Main {
         }
     }
 
-    public static void getN(){
+    public static void setN(){
         int numFrames = 0;
         System.out.println("Enter the number of physical frames.");
         while(numFrames < 2 || numFrames > 8) {
