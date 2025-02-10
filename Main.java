@@ -8,8 +8,8 @@ public class Main {
     public static ArrayList<ArrayList<String>> arrListOfArrLists = new ArrayList<>();
     public static ArrayList<String> pageFaults = new ArrayList<>();
     public static ArrayList<String> victimFrames = new ArrayList<>();
-    public static int[] refString = getRefString();
     public static int numPhysicalFrames = getN();
+    public static int[] refString = getRefString();
     public static boolean isNEWAlgo = getIsNew();
     public static int longestList = 0;
 
@@ -63,16 +63,25 @@ public class Main {
 
     public static int[] getRefString(){
         System.out.println("Enter the reference string: ");
-        String[] userRefString = scanner.nextLine().split("");
-        int[] intUserRefString = new int[userRefString.length];
-        try{
-            for(int i = 0; i < intUserRefString.length; i++){
-                intUserRefString[i] = Integer.parseInt(userRefString[i]);
+        while(true){
+            try{
+                String[] refString = scanner.nextLine().split("");
+                if(refString.length < numPhysicalFrames || refString.length > 20){
+                    System.out.println("Invalid length. "
+                    + "Enter a string greater than or equal to\n" 
+                    + "the number of physical frames and less than 20 characters.");
+                    continue;
+                }
+
+                int[] intRefString = new int[refString.length];
+                for(int i = 0; i < refString.length; i++){
+                    intRefString[i] = Integer.parseInt(refString[i]);
+                }
+                return intRefString;
+            } catch(NumberFormatException nfe){
+                System.out.println("Invalid data type. Enter only numbers.");
             }
-        } catch(NumberFormatException nfe){
-            System.err.println("Invalid data type.");
         }
-        return intUserRefString;
     }
 
     public static int getN(){
