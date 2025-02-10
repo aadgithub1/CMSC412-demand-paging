@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -8,83 +7,125 @@ public class Main {
     public static ArrayList<ArrayList<String>> arrListOfArrLists = new ArrayList<>();
     public static ArrayList<String> pageFaults = new ArrayList<>();
     public static ArrayList<String> victimFrames = new ArrayList<>();
-    public static int numPhysicalFrames = getN();
-    public static int[] refString = getRefString();
-    public static boolean isNEWAlgo = getIsNew();
+    public static int numPhysicalFrames = 0;
+    public static int[] refString = null;
+    public static boolean isNEWAlgo = false;
+    protected static boolean exit = false;
     public static int longestList = 0;
 
     public static void main(String[] args) {
-        
-        int hits = 0;
-        int misses = 0;
-
-        for(int i = 0; i < refString.length; i++){
-            System.out.println("Press enter to continue, any other key + enter "
-            + "to quit.");
-            if(!scanner.nextLine().equals("")){
+        while(true){
+            runMenu();
+            if(exit){
                 break;
             }
 
-            if(currentPages.size() < numPhysicalFrames
-            && !currentPages.contains(refString[i])){
-                currentPages.add(refString[i]);
-                ArrayList<String> arrList = new ArrayList<>();
-                if(i != 0){
-                    for(int j = 0; j < i; j++){
-                        arrList.add(" "); //pad other phys frame arrlists
+            int hits = 0;
+            int misses = 0;
+
+            for(int i = 0; i < refString.length; i++){
+                System.out.println("Press enter to continue, any other key + enter "
+                + "to quit.");
+                if(!scanner.nextLine().equals("")){
+                    break;
+                }
+
+                if(currentPages.size() < numPhysicalFrames
+                && !currentPages.contains(refString[i])){
+                    currentPages.add(refString[i]);
+                    ArrayList<String> arrList = new ArrayList<>();
+                    if(i != 0){
+                        for(int j = 0; j < i; j++){
+                            arrList.add(" "); //pad other phys frame arrlists
+                        }
                     }
-                }
-                arrList.add(Integer.toString(refString[i])); //add the access #
-                arrListOfArrLists.add(arrList);
-                victimFrames.add(" ");
-                pageFaults.add("F");
+                    arrList.add(Integer.toString(refString[i])); //add the access #
+                    arrListOfArrLists.add(arrList);
+                    victimFrames.add(" ");
+                    pageFaults.add("F");
 
-                misses++;
-            } else if(currentPages.size() == numPhysicalFrames
-            && !currentPages.contains(refString[i])){
-                if(isNEWAlgo) {
-                    runNEWAlgo(i);
-                } else{
-                    runOPTAlgo(i);
-                }
-                misses++;
-                pageFaults.add("F");
+                    misses++;
+                } else if(currentPages.size() == numPhysicalFrames
+                && !currentPages.contains(refString[i])){
+                    if(isNEWAlgo) {
+                        runNEWAlgo(i);
+                    } else{
+                        runOPTAlgo(i);
+                    }
+                    misses++;
+                    pageFaults.add("F");
 
-            } else {
-                hits++;
-                victimFrames.add(" ");
-                pageFaults.add(" ");
+                } else {
+                    hits++;
+                    victimFrames.add(" ");
+                    pageFaults.add(" ");
+                }
+                normalizeArrayLists(i);
+                displayInfo();
             }
-            normalizeArrayLists(i);
-            displayInfo();
         }
         scanner.close();
     }
 
-    public static int[] getRefString(){
+    public static void runMenu(){
+        while(true){
+            printMenu();
+            String userChoice = scanner.nextLine();
+            if(userChoice.equals("0")){
+                exit = true;
+                return;
+            } else if(userChoice.equals("1")){
+                getN();
+            } else if(userChoice.equals("2")){
+                getRefString();
+            } else if(userChoice.equals("3")){
+                return;
+            } else if(userChoice.equals("4")){
+                isNEWAlgo = true;
+                return;
+            } else{
+                System.out.println("Invalid input, please select items "
+                + "from the list only.");
+            }
+        }
+    }
+
+    public static void printMenu(){
+        System.out.println(
+            "\n0 - Exit\n" +
+            "1 - Input N\n" +
+            "2 - Input Reference String\n" +
+            "3 - Simulate OPT algorithm\n" +
+            "4 - Simulate NEW algorithm\n" +
+            "Select Option:"   
+        );
+    }
+
+    public static void getRefString(){
         System.out.println("Enter the reference string: ");
         while(true){
             try{
-                String[] refString = scanner.nextLine().split("");
-                if(refString.length < numPhysicalFrames || refString.length > 20){
+                String[] userRefString = scanner.nextLine().split("");
+                if(userRefString.length < numPhysicalFrames || userRefString.length > 20){
                     System.out.println("Invalid length. "
                     + "Enter a string greater than or equal to\n" 
                     + "the number of physical frames and less than 20 characters.");
                     continue;
                 }
 
-                int[] intRefString = new int[refString.length];
-                for(int i = 0; i < refString.length; i++){
-                    intRefString[i] = Integer.parseInt(refString[i]);
+                int[] intRefString = new int[userRefString.length];
+                for(int i = 0; i < userRefString.length; i++){
+                    intRefString[i] = Integer.parseInt(userRefString[i]);
                 }
-                return intRefString;
+                refString = intRefString;
+                return;
             } catch(NumberFormatException nfe){
                 System.out.println("Invalid data type. Enter only numbers.");
             }
         }
     }
 
-    public static int getN(){
+    public static void getN(){
         int numFrames = 0;
         System.out.println("Enter the number of physical frames.");
         while(numFrames < 2 || numFrames > 8) {
@@ -97,19 +138,19 @@ public class Main {
                 System.out.println("Invalid data type; enter numbers 2-8.");
             }
         }
-        return numFrames;
+        numPhysicalFrames = numFrames;
     }
 
-    public static boolean getIsNew(){
-        System.out.println("Type 'n' to run the NEW algorithm, hit any other "
-        + "key to run the OPT algorithm.");
-        String newChoice = scanner.nextLine().toLowerCase();
-        if(newChoice.equals("n")){
-            return true;
-        } else {
-            return false;
-        }
-    }
+    // public static boolean getIsNew(){
+    //     System.out.println("Type 'n' to run the NEW algorithm, hit any other "
+    //     + "key to run the OPT algorithm.");
+    //     String newChoice = scanner.nextLine().toLowerCase();
+    //     if(newChoice.equals("n")){
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 
     public static void runOPTAlgo(int index){
         ArrayList<Integer> evictList = new ArrayList<>(currentPages);
