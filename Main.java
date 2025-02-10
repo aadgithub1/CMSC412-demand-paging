@@ -20,9 +20,6 @@ public class Main {
                 break;
             }
 
-            int hits = 0;
-            int misses = 0;
-
             for(int i = 0; i < refString.length; i++){
                 System.out.println("Press enter to continue, any other key + enter "
                 + "to quit.");
@@ -44,7 +41,6 @@ public class Main {
                     victimFrames.add(" ");
                     pageFaults.add("F");
 
-                    misses++;
                 } else if(currentPages.size() == numPhysicalFrames
                 && !currentPages.contains(refString[i])){
                     if(isNEWAlgo) {
@@ -52,11 +48,9 @@ public class Main {
                     } else{
                         runOPTAlgo(i);
                     }
-                    misses++;
                     pageFaults.add("F");
 
                 } else {
-                    hits++;
                     victimFrames.add(" ");
                     pageFaults.add(" ");
                 }
@@ -81,11 +75,16 @@ public class Main {
             } else if(userChoice.equals("1")){
                 setN();
             } else if(userChoice.equals("2")){
+                verifyNumPhysicalFrames();
                 setRefString();
             } else if(userChoice.equals("3")){
+                verifyNumPhysicalFrames();
+                verifyRefString();
                 isNEWAlgo = false;
                 return;
             } else if(userChoice.equals("4")){
+                verifyNumPhysicalFrames();
+                verifyRefString();
                 isNEWAlgo = true;
                 return;
             } else{
@@ -104,6 +103,21 @@ public class Main {
             "4 - Simulate NEW algorithm\n" +
             "Select Option:"   
         );
+    }
+
+    public static void verifyNumPhysicalFrames(){
+        if(numPhysicalFrames == 0){
+            System.out.print("You need to enter a number of "
+            + "physical frames first. ");
+            setN();
+        }
+    }
+
+    public static void verifyRefString(){
+        if(refString == null){
+            System.out.print("You need to enter a reference string first. ");
+            setRefString();
+        }
     }
 
     public static void setRefString(){
